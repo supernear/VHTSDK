@@ -29,6 +29,7 @@ int main(int argc, char* argv[])
 	Turn_Devability_Set(0, &turn_capbility);
 //	Turn_Params_Set("Z99LD210JJUBAOH", "engos-cms.ulifecam.com:6002", &turn_params);
 	Turn_Params_Set("A99ZC210NLC8ZTX", "cnp2p.ulifecam.com:6001", &turn_params);
+//	Turn_Params_Set("A99ZC210NLC8ZTX", "119.23.124.137:6001", &turn_params);
 	Turn_Cb_Set(&turn_cb);
     Turn_Initialize(E_Turn_Mode_P2P, 500*1024, 10, turn_capbility.p2p_port_guess);
     Turn_InitDeviceCapability(&turn_capbility, &turn_params, &turn_cb);
