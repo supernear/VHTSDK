@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/notice_toolbar"
+        layout="@layout/layout_toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:layout_marginTop="20px"
+        android:layout_below="@id/notice_toolbar">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/iv_add_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/gif_5103_boot_3"
+            android:layout_marginTop="20px"
+            android:layout_marginBottom="90px"/>
+
+        <TextView
+            android:id="@+id/tv_add_status"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/iv_add_notice"
+            android:text="@string/connect_success"
+            android:textColor="#D6A058"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_add_notice"
+            android:layout_marginTop="30px"
+            android:padding="30px"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tv_add_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="@string/connect_notice"/>
+
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30px"
+            android:padding="20px">
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#2b8efb"
+                android:text="@string/red_light_"/>
+            <View
+                android:layout_below="@id/tv"
+                android:layout_width="wrap_content"
+                android:layout_alignStart="@id/tv"
+                android:layout_alignEnd="@id/tv"
+                android:layout_height="2px"
+                android:background="#2b8efb"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

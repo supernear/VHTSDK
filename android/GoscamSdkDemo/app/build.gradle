@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "30.0.1"
+
+
+    signingConfigs {
+        GooglePlay_Signing_config {
+            keyAlias 'goscam'
+            keyPassword '123456'
+            storeFile file(GOSCAM_KEYSTORE_FILE)
+            storePassword '123456'
+        }
+        debug {
+            keyAlias 'goscam'
+            keyPassword '123456'
+            storeFile file(GOSCAM_KEYSTORE_FILE)
+            storePassword '123456'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.goscamsdkdemo"
+        minSdkVersion 18
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        signingConfig signingConfigs.GooglePlay_Signing_config
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.GooglePlay_Signing_config
+            zipAlignEnabled true
+            minifyEnabled false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+        debug {
+            signingConfig signingConfigs.GooglePlay_Signing_config
+            zipAlignEnabled true
+            minifyEnabled false //SHIFOUF
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+    }
+    ndkVersion '21.0.6113669'
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.2'
+    implementation files('libs\\lib-dev-sdk.jar')
+    implementation files('libs\\lib-player-sdk.jar')
+    implementation files('libs\\voiceRecog.jar')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.12'
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
+    implementation 'com.lzy.net:okgo:3.0.4'
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.4.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+
+    
+}

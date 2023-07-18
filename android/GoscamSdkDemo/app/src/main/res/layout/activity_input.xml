@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/et_dev_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="start|center_vertical"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="@string/input_password"
+        android:text="A99ZC210NLC8ZTX"
+        android:maxLength="15"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black" />
+
+    <Button
+        app:layout_constraintTop_toBottomOf="@+id/et_dev_id"
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/main_button_selector"
+        android:gravity="center"
+        android:padding="0dp"
+        android:singleLine="true"
+        android:text="@string/next"
+        android:textColor="#fff"/>
+
+    <Button
+        app:layout_constraintTop_toBottomOf="@+id/btn_next"
+        android:id="@+id/btn_tf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/main_button_selector"
+        android:gravity="center"
+        android:padding="0dp"
+        android:singleLine="true"
+        android:text="playback"
+        android:textColor="#fff"/>
+
+
+</android.support.constraint.ConstraintLayout>

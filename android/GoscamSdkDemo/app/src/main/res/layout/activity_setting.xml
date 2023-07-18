@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/layout_toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/btn_modify_name"
+                style="@style/style_setting_item"
+                android:text="@string/modify_dev_name"
+                android:onClick="click_Modify_DevName"/>
+
+            <Button
+                android:id="@+id/btn_dev_share"
+                style="@style/style_setting_item"
+                android:text="@string/dev_share"
+                android:onClick="click_Dev_Share"/>
+
+            <Button
+                android:id="@+id/btn_delete_dev"
+                style="@style/style_setting_item"
+                android:text="@string/delete_dev"
+                android:onClick="click_Delete_Dev"/>
+
+            <Button
+                android:id="@+id/btn_move_motion"
+                style="@style/style_setting_item"
+                android:layout_marginTop="30dp"
+                android:text="@string/move_motion"
+                android:onClick="click_Move_Motion"/>
+
+            <Button
+                android:id="@+id/btn_pir"
+                style="@style/style_setting_item"
+                android:text="@string/pir_detection"
+                android:onClick="click_Pir_Detection"/>
+
+            <Button
+                android:id="@+id/btn_time"
+                style="@style/style_setting_item"
+                android:layout_marginTop="30dp"
+                android:text="@string/time_j"
+                android:onClick="click_Time_Verify"/>
+
+            <Button
+                android:id="@+id/btn_night"
+                style="@style/style_setting_item"
+                android:layout_marginTop="30dp"
+                android:text="@string/night_switch"
+                android:onClick="click_Night_Switch"/>
+
+            <Button
+                android:id="@+id/btn_led"
+                style="@style/style_setting_item"
+                android:text="@string/led_switch"
+                android:onClick="click_Led_Switch"/>
+
+            <Button
+                android:id="@+id/btn_camera_switch"
+                style="@style/style_setting_item"
+                android:text="@string/camera_switch"
+                android:onClick="click_Camera_Switch"/>
+
+            <Button
+                android:id="@+id/btn_mic_switch"
+                style="@style/style_setting_item"
+                android:text="@string/mic_switch"
+                android:onClick="click_Mic_Switch"/>
+
+            <Button
+                android:id="@+id/btn_tf_info"
+                style="@style/style_setting_item"
+                android:layout_marginTop="30dp"
+                android:text="@string/tf_info"
+                android:onClick="click_Tf_Info"/>
+
+            <Button
+                android:id="@+id/btn_soft_update"
+                style="@style/style_setting_item"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/dev_soft_update"
+                android:onClick="click_Soft_Update"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

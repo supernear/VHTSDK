@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/drawable/main_button_selector.xml" value="0.301025641025641" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/drawable/shape_1_cr.xml" value="0.32592592592592595" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_camera_switch.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_check_bind_status.xml" value="0.32447916666666665" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_cloud_day.xml" value="0.30480072463768115" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_dev_share.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_dev_soft_update.xml" value="0.3177083333333333" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_forget_psw.xml" value="0.32447916666666665" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_input.xml" value="0.24114583333333334" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_led_switch.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_login.xml" value="0.28958333333333336" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_mic_switch.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_modify_psw.xml" value="0.32447916666666665" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_mofiy_dev_name.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_motion_detection.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_night_switch.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_pir_detection.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_play.xml" value="0.3463541666666667" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_play_id.xml" value="0.3220108695652174" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_qrcode.xml" value="0.32447916666666665" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_register.xml" value="0.32447916666666665" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_setting.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_tf_file_play.xml" value="0.3161231884057971" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_tf_info.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_time_verify.xml" value="0.25" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_wifi_select.xml" value="0.32447916666666665" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/activity_ws.xml" value="0.24010416666666667" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/dialog_loading.xml" value="0.19947916666666668" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/item_area.xml" value="0.30480072463768115" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/item_cloud_day.xml" value="0.30480072463768115" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/item_day_file.xml" value="0.30480072463768115" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/item_device.xml" value="0.30480072463768115" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/item_device_empty.xml" value="0.30480072463768115" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/item_share.xml" value="0.30480072463768115" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/item_tv.xml" value="0.30480072463768115" />
+        <entry key="..\:/Android/source/GoscamSdkDemo/app/src/main/res/layout/layout_toolbar.xml" value="0.32447916666666665" />
+        <entry key="..\:/Goscam/SDKdemo/demo/GoscamSdkDemo/app/src/main/res/xml/network_security_config.xml" value="0.2957427536231884" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
