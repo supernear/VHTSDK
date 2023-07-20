@@ -40,7 +40,6 @@ import com.gos.platform.device.result.ConnectResult;
 import com.gos.platform.device.result.DevResult;
 import com.goscamsdkdemo.tf.NewTfFilePlayActivity;
 import com.goscamsdkdemo.util.ConnectUtils;
-import com.goscamsdkdemo.util.Packet;
 import com.goscamsdkdemo.util.dbg;
 
 import java.io.File;
@@ -362,8 +361,6 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
         byte[] temp = new byte[avFrame.data.length];
         System.arraycopy(avFrame.data, 0, temp, 0, avFrame.data.length);
         retVal = mMediaPlayer.putFrame(avFrame.data, avFrame.dataLen, 1);
-        int nFrameType = Packet.byteArrayToInt_Little(avFrame.data, 4);
-        Log.d("onStreamCallback", "retVal=" + retVal + " nFrameType " + nFrameType);
         if (retVal == -20) {
             mConnection.pasueRecvStream(0, true);
         }
