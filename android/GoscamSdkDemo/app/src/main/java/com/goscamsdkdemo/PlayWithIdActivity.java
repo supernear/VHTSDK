@@ -1,7 +1,6 @@
 package com.goscamsdkdemo;
 
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
@@ -41,8 +40,10 @@ import com.gos.platform.device.result.ConnectResult;
 import com.gos.platform.device.result.DevResult;
 import com.goscamsdkdemo.tf.NewTfFilePlayActivity;
 import com.goscamsdkdemo.util.ConnectUtils;
+import com.goscamsdkdemo.util.Packet;
 import com.goscamsdkdemo.util.dbg;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -71,7 +72,8 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
     private String deviceId;
     int HD = 720;
     private int videoQuality = -1;
-    public static void startActivity(Context context, String deviceId){
+
+    public static void startActivity(Context context, String deviceId) {
         Intent intent = new Intent(context, PlayWithIdActivity.class);
         intent.putExtra(EXTRA_DEVICE_ID, deviceId);
         context.startActivity(intent);
@@ -127,7 +129,7 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
 
         sAudioTrack = new AudioTrack(AudioManager.STREAM_VOICE_CALL,//STREAM_VOICE_CALL  STREAM_MUSIC
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
-                nMinBufSize, AudioTrack.MODE_STREAM,sAudioRecord.getAudioSessionId());//,
+                nMinBufSize, AudioTrack.MODE_STREAM, sAudioRecord.getAudioSessionId());//,
 
         sAudioTrack.play();
 
@@ -168,7 +170,7 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
         sAudioHandler.removeCallbacksAndMessages(null);
         mConnection.stopTalk(0);
         mConnection.stopVideo(0, this);
-        if (sAudioRecord != null && AudioRecord.STATE_UNINITIALIZED != sAudioRecord.getState()){
+        if (sAudioRecord != null && AudioRecord.STATE_UNINITIALIZED != sAudioRecord.getState()) {
             sAudioRecord.stop();
             sAudioRecord.release();
         }
@@ -179,8 +181,9 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
 
     AudioTrack sAudioTrack;
     AudioHandler sAudioHandler;
+
     class AudioHandler extends Handler {
-        public AudioHandler(Looper looper){
+        public AudioHandler(Looper looper) {
             super(looper);
         }
 
@@ -188,17 +191,19 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             byte[] data = (byte[]) msg.obj;
-            if(sAudioTrack.getPlayState() != AudioTrack.PLAYSTATE_PLAYING)
+            if (sAudioTrack.getPlayState() != AudioTrack.PLAYSTATE_PLAYING)
                 sAudioTrack.play();
-            sAudioTrack.write(data,0,data.length);
+            sAudioTrack.write(data, 0, data.length);
         }
     }
 
     AudioRecord sAudioRecord;
     RecordHandler sRecordHandler;
+
     class RecordHandler extends Handler {
         public boolean isStartRecord;
-        public RecordHandler(Looper looper){
+
+        public RecordHandler(Looper looper) {
             super(looper);
         }
 
@@ -206,16 +211,16 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             byte[] audioData = new byte[640];
-            if(sAudioRecord.getState() == AudioRecord.STATE_INITIALIZED){
+            if (sAudioRecord.getState() == AudioRecord.STATE_INITIALIZED) {
                 sAudioRecord.startRecording();
             }
 
-            while (isStartRecord){
-                int size = sAudioRecord.read(audioData, 0,audioData.length);
+            while (isStartRecord) {
+                int size = sAudioRecord.read(audioData, 0, audioData.length);
                 if (size == audioData.length) {
                     byte[] g711Buf = new byte[320];
-                    int len = AvPlayerCodec.nativeEncodePCMtoG711A(8000,1,audioData,audioData.length,g711Buf);
-                    if(len>0){
+                    int len = AvPlayerCodec.nativeEncodePCMtoG711A(8000, 1, audioData, audioData.length, g711Buf);
+                    if (len > 0) {
                         mConnection.sendTalkData(0, 53, 8000, 0, g711Buf, g711Buf.length);
 
                     }
@@ -225,52 +230,54 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
         }
     }
 
-    public void connect(View view){
-        if(mConnection.isConnected()){
+    public void connect(View view) {
+        if (mConnection.isConnected()) {
             showToast("connect success");
             mBtnStartVideo.setEnabled(true);
             mBtnStartTalk.setEnabled(true);
             mBtnHD.setEnabled(true);
             mBtnSD.setEnabled(true);
-        }else {
+        } else {
             mConnection.connect(0);
         }
     }
 
-    public void openStream(View view){
-            int timestamp = (int) (System.currentTimeMillis() / 1000L);
-            int timezone = (TimeZone.getDefault().getRawOffset() / 3600000) + 24;// on the IPC side, -24,
-            if(TimeZone.getDefault().inDaylightTime(new Date())){
-                timezone++;
-            }
-            mConnection.startVideo(0, StreamType.VIDEO_AUDIO, "", timestamp, timezone, this);
+    public void openStream(View view) {
+        int timestamp = (int) (System.currentTimeMillis() / 1000L);
+        int timezone = (TimeZone.getDefault().getRawOffset() / 3600000) + 24;// on the IPC side, -24,
+        if (TimeZone.getDefault().inDaylightTime(new Date())) {
+            timezone++;
+        }
+        mConnection.startVideo(0, StreamType.VIDEO_AUDIO, "", timestamp, timezone, this);
     }
 
-    public void stopStream(View view){
+
+
+    public void stopStream(View view) {
         mConnection.stopVideo(0, this);
+
     }
 
-    public void startTalk(View view){
-        if(mConnection.isConnected()){
-            mConnection.startTalk(0,"");
+    public void startTalk(View view) {
+        if (mConnection.isConnected()) {
+            mConnection.startTalk(0, "");
             mBtnStopTalk.setEnabled(true);
         }
     }
 
-    public void stopTalk(View view){
+    public void stopTalk(View view) {
         sRecordHandler.isStartRecord = false;
     }
 
 
-
-    public void changeHd(View view){
+    public void changeHd(View view) {
         if (videoQuality == VideoQuality.STREAM_HD)
             return;
         videoQuality = VideoQuality.STREAM_HD;
         mConnection.setStreamQuality(0, VideoQuality.STREAM_HD);
     }
 
-    public void changeSd(View view){
+    public void changeSd(View view) {
         if (videoQuality == VideoQuality.STREAM_SD)
             return;
         videoQuality = VideoQuality.STREAM_SD;
@@ -279,21 +286,23 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
 
     @Override
     public void onDevEvent(String s, DevResult devResult) {
-        if(!TextUtils.equals(s, deviceId)){return;}
+        if (!TextUtils.equals(s, deviceId)) {
+            return;
+        }
 
         DevResult.DevCmd devCmd = devResult.getDevCmd();
         int code = devResult.getResponseCode();
-        switch (devCmd){
+        switch (devCmd) {
             case connect:
                 ConnectResult connectResult = (ConnectResult) devResult;
-                if(connectResult.getConnectStatus() == ConnectStatus.CONNECT_SUCCESS){
+                if (connectResult.getConnectStatus() == ConnectStatus.CONNECT_SUCCESS) {
                     mBtnStartVideo.setEnabled(true);
                     mBtnStartTalk.setEnabled(true);
                     showToast("connect success");
                 }
                 break;
             case startVideo:
-                if(ResultCode.SUCCESS == code){
+                if (ResultCode.SUCCESS == code) {
                     mBtnStopVideo.setEnabled(true);
                     mBtnHD.setEnabled(true);
                     mBtnSD.setEnabled(true);
@@ -303,11 +312,11 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
             case stopVideo:
                 break;
             case startTalk:
-                if(ResultCode.SUCCESS == code){
+                if (ResultCode.SUCCESS == code) {
                     sRecordHandler.isStartRecord = true;
                     sRecordHandler.sendEmptyMessage(0);
                     showToast("start talk success");
-                }else{
+                } else {
                     mConnection.stopTalk(0);
                 }
                 break;
@@ -322,15 +331,14 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
 
     @Override
     public void decCallBack(DecType type, byte[] data, int dataSize, int width, int height, int rate, int ch, int flag, int frameNo, String aiInfo) {
-        if(DecType.YUV420 == type){
+        if (DecType.YUV420 == type) {
             ByteBuffer buf = ByteBuffer.wrap(data);
-            mGlRenderer.update(buf ,width, height);
+            mGlRenderer.update(buf, width, height);
             checkVideoQualityChanged(width, height);
-
-        }else if(DecType.AUDIO == type){
+        } else if (DecType.AUDIO == type) {
             byte[] t = new byte[dataSize];
             System.arraycopy(data, 0, t, 0, dataSize);
-            Log.e("Audio", "decCallBack: " + data.length );
+            Log.e("Audio", "decCallBack: " + data.length);
             Message obtain = Message.obtain();
             obtain.obj = t;
             sAudioHandler.sendMessage(obtain);
@@ -339,25 +347,23 @@ public class PlayWithIdActivity extends BaseActivity implements OnDevEventCallba
 
 
     private void checkVideoQualityChanged(int width, int height) {
-        dbg.D("checkVideoQualityChanged","width="+width+",height="+height + " videoQuality "+ videoQuality);
+        dbg.D("checkVideoQualityChanged", "width=" + width + ",height=" + height + " videoQuality " + videoQuality);
     }
-
-
-
 
 
     @Override
     public void recCallBack(RecEventType type, long data, long flag) {
 
     }
+
     long retVal;
     @Override
     public void onVideoStream(String s, AvFrame avFrame) {
         byte[] temp = new byte[avFrame.data.length];
         System.arraycopy(avFrame.data, 0, temp, 0, avFrame.data.length);
-        mMediaPlayer.putFrame(temp, temp.length,1);
-        retVal = mMediaPlayer.putFrame(avFrame.data,avFrame.dataLen,1);
-        Log.d("onStreamCallback","retVal="+retVal);
+        retVal = mMediaPlayer.putFrame(avFrame.data, avFrame.dataLen, 1);
+        int nFrameType = Packet.byteArrayToInt_Little(avFrame.data, 4);
+        Log.d("onStreamCallback", "retVal=" + retVal + " nFrameType " + nFrameType);
         if (retVal == -20) {
             mConnection.pasueRecvStream(0, true);
         }
