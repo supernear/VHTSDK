@@ -9,6 +9,8 @@
 #include "protocol_struct.h"
 #include "protocol_cmd.h"
 #include "media_define.h"
+#include "aes256.h"
+#include "sha256.h"
 
 #define		DEMO_REPLAY_FILE 		"rec_replay.media"
 #define		DEMO_LIVE_CHN0_FILE 	"live_stream_ch0.media"
@@ -45,9 +47,17 @@ void* Turn_On_Live_Task(void* lparam)
 	ULOGW("Turn Live task start...");
 
 //	int ret;
-	int rbytes;
+	unsigned int rbytes;
 	frame_head frameHead;
-	char* live_frame = (char*)malloc(256*1024);
+	unsigned char* live_frame = (unsigned char*)malloc(256*1024);
+	unsigned char* enc_frame = NULL;
+	unsigned int enc_len = 0;
+
+	unsigned char* denc_frame = NULL;
+	unsigned int denc_len = 0;
+    unsigned char key[32] = {0};
+
+   // FILE* fp1 =  fopen("enc.media", "wb");
 
 	while(s_Turn_Instance.live_stop != 1)
 	{
@@ -71,10 +81,57 @@ void* Turn_On_Live_Task(void* lparam)
 				turnData_type = E_TurnData_Type_audio;
 			}
 
-			ULOGD("nCodeType:%02u nFrameType:%02u nFrameNo:%04u nUtcTime:%u nTimestamp:%u nFrameRate:%04u nDataSize:%u", frameHead.nCodeType, frameHead.nFrameType, frameHead.nFrameNo, frameHead.nUtcTime, frameHead.nTimestamp, frameHead.nFrameRate, frameHead.nDataSize);
+			ULOGD("nCodeType:%02u nFrameType:%02u nFrameNo:%04u nUtcTime:%u nTimestamp:%u nFrameRate:%04u nDataSize:%u",
+			        frameHead.nCodeType,
+			        frameHead.nFrameType,
+			        frameHead.nFrameNo,
+			        frameHead.nUtcTime,
+			        frameHead.nTimestamp,
+			        frameHead.nFrameRate,
+			        frameHead.nDataSize);
 			memcpy(live_frame, &frameHead, sizeof(frameHead));
 			rbytes = fread(live_frame+sizeof(frameHead), 1, frameHead.nDataSize, s_live_fd);
-			Turn_SendAVData(0, (char*)live_frame, rbytes+sizeof(frameHead), turnData_type, 0, frameHead.nFrameType==gos_video_i_frame?1:0);
+            if(frameHead.nFrameType == gos_video_i_frame)
+            {
+                help_sha256_mac((unsigned char *)"40EAA085-5783-48c0-A420-5CC77F32865E",
+                                strlen("40EAA085-5783-48c0-A420-5CC77F32865E"), key);
+                int ret = aes256_cbc_enc(live_frame+sizeof(frameHead), rbytes, &enc_frame, &enc_len, key);
+                if (ret == 0)
+                {
+                    frameHead.nFrameType = gos_video_encryption_i_frame;
+                    frameHead.nDataSize = enc_len;
+                    memcpy(live_frame, &frameHead, sizeof(frameHead));
+                    memcpy(live_frame+sizeof(frameHead), (char*)(enc_frame), enc_len);
+                    rbytes = enc_len;
+                    //aes256_cbc_dec(enc_frame, enc_len, &denc_frame, &denc_len, key);
+                    //ULOGW("rbye = %d  enc_len = %d  denc_len = %d", rbytes, enc_len, denc_len);
+                    //if(denc_frame != NULL)
+                    //{
+                    //   int ii = 0;
+                    //    for(ii = 0; ii < 16; ii ++)
+                    //    {
+                    //        ULOGW("0x%x  0x%x", *(live_frame+sizeof(frameHead) +ii), *(denc_frame + ii));
+                    //    }
+                   // }
+                   if(enc_frame != NULL)
+                   {
+                        free(enc_frame);
+                        enc_frame = NULL;
+                   }
+                }
+            }
+
+             {
+                // fwrite(live_frame, 1, rbytes+sizeof(frameHead), fp1);
+             }
+
+            int isKey = 0;
+            if( frameHead.nFrameType==gos_video_i_frame || frameHead.nFrameType==gos_video_encryption_i_frame)
+            {
+                isKey =1;
+            }
+			Turn_SendAVData(0, (char*)live_frame, rbytes+sizeof(frameHead), turnData_type, 0, isKey);
+
 			if(frameHead.nCodeType != gos_audio_G711A)
 			{
 				usleep(25*1000);
@@ -102,7 +159,11 @@ void* Turn_On_Live_Task(void* lparam)
 			}
 		}
 	}
-
+    if(live_frame != NULL)
+    {
+        free(live_frame);
+        live_frame = NULL;
+    }
 	return NULL;
 }
 
@@ -152,23 +213,22 @@ int Turn_On_LiveStop(TurnConn conn, int type, void* data, int length)
 //	SMsgAVIoctrlAVStream *p = (SMsgAVIoctrlAVStream*)data;
 
 	Turn_MarkLiveState(conn, 0);
-
 	if(s_Turn_Instance.live_tid != 0)
 	{
 		s_Turn_Instance.live_stop = 1;
 		Pthread_join(s_Turn_Instance.live_tid, NULL);
 		s_Turn_Instance.live_tid = 0;
 	}
-
 	s_liveChn = -1;
 	if(s_live_fd != NULL)
 	{
 		fclose(s_live_fd);
 		s_live_fd = NULL;
 	}
-
 	return 0;
 }
+
+
 int Turn_On_AudioStart(TurnConn conn, int type, void* data, int length)
 {
 	ULOGI("IOTYPE_USER_IPCAM_AUDIOSTART");
@@ -274,7 +334,7 @@ int Turn_On_SpeakData(TurnConn conn, int type, void* data, int length)
 	if(s_spk_fd != NULL)
 	{
 		int wbytes = fwrite((unsigned char*)data+sizeof(frame_head), 1, length-sizeof(frame_head), s_spk_fd);
-		ULOGD("recv speak data lenght:%d, saved %d", length-sizeof(frame_head), wbytes);
+		ULOGD("recv speak data lenght:%d", length-sizeof(frame_head));
 	}
 
 	return 0;

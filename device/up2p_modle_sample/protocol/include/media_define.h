@@ -1,14 +1,14 @@
 #ifndef MEDIA_DEFINE_H
 #define MEDIA_DEFINE_H
 
-typedef struct 
+typedef struct
 {
 	unsigned int	nChannel;			// 混合流通道
 	unsigned int	nDataSize;			// data数据长度
 	char			reserve[16];
 }frame_mix_head;
 
-typedef struct 
+typedef struct
 {
 	unsigned int	nFrameNo;			// 帧号
 	unsigned int	nFrameType;			// 帧类型	gos_frame_type_t
@@ -22,7 +22,7 @@ typedef struct
 	char			data[0];
 }frame_head;
 
-typedef struct 
+typedef struct
 {
 	unsigned int	nFrameNo;			// 帧号
 	unsigned int	nFrameType;			// 帧类型	gos_frame_type_t
@@ -36,7 +36,7 @@ typedef struct
 	unsigned short	sHeight;			// 视频高
 }rec_frame_head;
 
-typedef enum 
+typedef enum
 {
 	gos_codec_unknown = 0,
 
@@ -57,7 +57,7 @@ typedef enum
 
 } gos_codec_type_t;
 
-typedef enum 
+typedef enum
 {
 	gos_unknown_frame = 0,				// 未知帧
 	gos_video_i_frame = 1,				// I 帧
@@ -66,18 +66,19 @@ typedef enum
 	gos_video_rec_i_frame = 4,			//录像I帧
 	gos_video_rec_p_frame = 5,			//录像P帧
 	gos_video_rec_b_frame = 6,			//录像B帧
-	gos_video_rec_end_frame = 7,		//录像完成接收完成(不带数据)		
+	gos_video_rec_end_frame = 7,		//录像完成接收完成(不带数据)
 	gos_video_cut_i_frame = 8,			//剪接录像I帧
 	gos_video_cut_p_frame = 9,			//剪接录像P帧
 	gos_video_cut_b_frame = 10,			//剪接录像B帧
 	gos_video_cut_end_frame =11,		//剪接录像完成(不带数据)
 	gos_video_preview_i_frame = 12,		//预览图
-	gos_video_rec_start_frame = 13,		//录像开始播放(不需要解码)		
-	
+	gos_video_rec_start_frame = 13,		//录像开始播放(不需要解码)
+    gos_video_encryption_i_frame = 15,
+
 	gos_audio_frame   	= 50,			// 音频帧
 	gos_rec_audio_frame   = 51, 		// 音频帧
 	gos_cut_audio_frame   = 52, 		// 音频帧
-	
+
 	gos_special_frame 	= 100,			// 特殊帧	 gos_special_data 比如门灯灯状态主动上传app
 	gos_ai_frame 			= 101,		// AI信息帧SAiInfo
 	gos_rec_picture_frame 	= 102,		// 卡录像缩略图
@@ -99,11 +100,11 @@ typedef struct
 
     // unsigned int videoWidth;
     // unsigned int videoHeight;
-    
+
 }FRAMEINFO_t;
 
 /* CODEC ID */
-typedef enum 
+typedef enum
 {
 	MEDIA_CODEC_UNKNOWN			= 0x00,
 	MEDIA_CODEC_VIDEO_MPEG4		= 0x4C,
@@ -117,7 +118,7 @@ typedef enum
     MEDIA_CODEC_AUDIO_AAC_LATM  = 0x88,   // 2017-05-04 add AAC LATM audio codec definition
     MEDIA_CODEC_AUDIO_AAC       = 0x88,   // 2014-07-02 add AAC LATM audio codec definition
     MEDIA_CODEC_AUDIO_G711U     = 0x89,   //g711 u-law
-    MEDIA_CODEC_AUDIO_G711A     = 0x8A,   //g711 a-law	
+    MEDIA_CODEC_AUDIO_G711A     = 0x8A,   //g711 a-law
     MEDIA_CODEC_AUDIO_ADPCM     = 0X8B,
 	MEDIA_CODEC_AUDIO_PCM		= 0x8C,
 	MEDIA_CODEC_AUDIO_SPEEX		= 0x8D,
@@ -127,7 +128,7 @@ typedef enum
 }ENUM_CODECID;
 
 /* FRAME Flag */
-typedef enum 
+typedef enum
 {
 	IPC_FRAME_FLAG_PBFRAME	= 0x00,	// A/V P/B frame..
 	IPC_FRAME_FLAG_IFRAME	= 0x01,	// A/V I frame.
